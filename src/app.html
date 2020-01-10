@@ -1,0 +1,103 @@
+<template>
+  <require from="resources/value-converters/date-time"></require>
+  <require from="resources/value-converters/time"></require>
+  <require from="resources/inputs/date-time-picker"></require>
+  <div class="container">
+    <h1 class="title is-4">${message} - ${today | dateTime} Uhr</h1>
+
+    <div class="columns">
+      <div class="column">
+        <section class="section">
+          <h2 class="subtitle is-4">Heute</h2>
+          <input type="date" date-time-picker="date.bind:date;">
+          <div>
+            ${actualDate}
+          </div>
+          <div class="ephimeride is-header">
+            <div class="ephimeride__datum">Datum</div>
+            <div class="ephimeride__sonnenaufgang">Sonnenaufgang</div>
+            <div class="ephimeride__sonnenuntergang">Sonnenuntergang</div>
+            <div class="ephimeride__tageslaenge">Tageslänge</div>
+          </div>
+          <div class="ephimeride">
+            <div class="ephimeride__datum">
+              ${actualEphimeride.tag | dateTime: 'DD.MM.YYYY'}
+            </div>
+            <div class="ephimeride__sonnenaufgang">
+              ${actualEphimeride.sonnenaufgang | dateTime:'HH:mm'} Uhr
+            </div>
+            <div class="ephimeride__sonnenuntergang">
+              ${actualEphimeride.sonnenuntergang | dateTime:'HH:mm'} Uhr
+            </div>
+            <div class="ephimeride__tageslaenge">
+              ${actualEphimeride.tageslaenge | time}
+            </div>
+          </div>
+
+          <h2 class="subtitle is-4">Liste</h2>
+          <div class="filter-container">
+            <div class="filter__similar">
+              <div class="field">
+                <input
+                  class="is-checkradio"
+                  id="hideOuterRange"
+                  type="checkbox"
+                  name="hideOuterRange"
+                  checked.bind="hideOuterRange"
+                />
+                <label for="hideOuterRange">Nur ähnliche anzeigen</label>
+              </div>
+            </div>
+            <div class="filter__delta">
+              <div class="select is-small">
+                <select name="delta" id="delta" value.bind="diffDelta">
+                  <option repeat.for="d of 10" model.bind="d">${d}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <ul
+            class="ephimerides"
+            if.bind="showList"
+            class.bind="hideOuterRange?'hide-outer-range':''"
+          >
+            <li class="ephimeride is-header">
+              <div class="ephimeride__datum">Datum</div>
+              <div class="ephimeride__sonnenaufgang">Sonnenaufgang</div>
+              <div class="ephimeride__sonnenuntergang">Sonnenuntergang</div>
+              <div class="ephimeride__tageslaenge">Tageslänge</div>
+            </li>
+            <li
+              repeat.for="ephimeride of ephimerides"
+              class="ephimeride ${isTodayClass(ephimeride)}"
+              class.bind="ephimeride.minDiff <= diffDelta?'is-highlighted':''"
+            >
+              <div class="ephimeride__datum">
+                ${ephimeride.tag | dateTime: 'DD.MM.YYYY'}
+              </div>
+              <div
+                class="ephimeride__sonnenaufgang"
+                class.bind="highlightLevel(ephimeride.sonnenaufgangDiff)"
+              >
+                ${ephimeride.sonnenaufgang | dateTime:'HH:mm'} Uhr
+              </div>
+              <div
+                class="ephimeride__sonnenuntergang"
+                class.bind="highlightLevel(ephimeride.sonnenuntergangDiff)"
+              >
+                ${ephimeride.sonnenuntergang | dateTime:'HH:mm'} Uhr
+              </div>
+              <div
+                class="ephimeride__tageslaenge"
+                class.bind="highlightLevel(ephimeride.tageslaengeDiff)"
+              >
+                ${ephimeride.tageslaenge | time}
+              </div>
+            </li>
+          </ul>
+        </section>
+      </div>
+      <div class="column"></div>
+    </div>
+  </div>
+</template>

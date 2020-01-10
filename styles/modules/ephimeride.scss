@@ -1,0 +1,63 @@
+$highlighted-0-color: rgb(253,245,66);
+$highlighted-1-color: rgba(255,144,5, .4);
+$highlighted-2-color: rgba(255,144,5, .3);
+$highlighted-3-color: rgba(255,144,5, .2);
+$highlighted-4-color: rgba(255,144,5, .1);
+
+.ephimerides.hide-outer-range {
+  .ephimeride:not(.is-highlighted) {
+    display: none;
+  }
+}
+
+.is-highlighted {
+  & .highlight-level-0 {
+    background-color: $highlighted-0-color;
+  }
+  & .highlight-level-1 {
+    background-color: $highlighted-1-color;
+  }
+  & .highlight-level-2 {
+    background-color: $highlighted-2-color;
+  }
+  & .highlight-level-3 {
+    background-color: $highlighted-3-color;
+  }
+  & .highlight-level-4 {
+    background-color: $highlighted-4-color;
+  }
+}
+
+.is-today {
+  background-color: rgba(0,255,0,0.5);
+
+  & div {
+    background-color: rgba(0,255,0,0.5) !important;
+  }
+}
+
+.ephimeride {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas: 'datum sonnenaufgang sonnenuntergang tageslaenge';
+
+  &.is-header {
+    font-weight: 600;
+  }
+}
+
+.ephimeride__datum {
+  grid-area: datum;
+}
+
+.ephimeride__sonnenaufgang {
+  grid-area: sonnenaufgang;
+}
+
+.ephimeride__sonnenuntergang {
+  grid-area: sonnenuntergang;
+}
+
+.ephimeride__tageslaenge {
+  grid-area: tageslaenge;
+}

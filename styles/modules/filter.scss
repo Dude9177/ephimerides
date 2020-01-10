@@ -1,0 +1,13 @@
+.filter-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'similar delta';
+}
+
+.filter__similar {
+  grid-area: similar;
+}
+
+.filter__delta {
+  grid-area: delta;
+}

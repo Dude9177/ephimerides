@@ -18,6 +18,7 @@ export class Ephimeride {
   public tageslaengeDiff: number = 0
   public sonnenaufgangDiff: number = 0
   public sonnenuntergangDiff: number = 0
+  public isHighlighted: boolean
   
   constructor(
     public stadt: string = '',

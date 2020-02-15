@@ -1,9 +1,9 @@
 <template>
   <require from="resources/value-converters/date-time"></require>
   <require from="resources/value-converters/time"></require>
-  <require from="resources/inputs/date-time-picker"></require>
+  <require from="resources/attributes/date-time-picker"></require>
   <div class="container">
-    <h1 class="title is-4">${message} - ${today | dateTime} Uhr</h1>
+    <h1 class="title is-4">${message} - ${date | dateTime} Uhr</h1>
 
     <div class="columns">
       <div class="column">
@@ -69,7 +69,7 @@
             </li>
             <li
               repeat.for="ephimeride of ephimerides"
-              class="ephimeride ${isTodayClass(ephimeride)}"
+              class="ephimeride ${ephimeride.isHighlighted?'is-today':''}"
               class.bind="ephimeride.minDiff <= diffDelta?'is-highlighted':''"
             >
               <div class="ephimeride__datum">
@@ -97,7 +97,9 @@
           </ul>
         </section>
       </div>
-      <div class="column"></div>
+      <div class="column">
+        <div id="chartDiv" style="width: 100%; height: 800px;"></div>
+      </div>
     </div>
   </div>
 </template>

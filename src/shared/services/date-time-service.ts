@@ -5,9 +5,17 @@ import 'moment/locale/de-at'
 const logger = LogManager.getLogger('date time service')
 
 export class DateTimeService {
+  constructor() {
+    moment.locale('de')
+  }
+
   public format(dateTime: Date, format: string = 'LLLL') {
     const returnValue = moment(dateTime).format(format)
     return returnValue
+  }
+
+  public stringToDate(date: string, format: string = '') {
+    return moment(date, format).toDate()
   }
 
   public toDate(tag: number, monat: string, jahr: number, uhrzeit: string) {

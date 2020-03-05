@@ -1,6 +1,7 @@
 import { autoinject, LogManager, observable } from 'aurelia-framework'
 import * as Highcharts from 'highcharts'
 import HighchartsMore from 'highcharts/highcharts-more.js'
+import { TimeValueConverter } from 'resources/value-converters/time'
 import { Ephimeride } from 'shared/models/ephimeride-model'
 import { DateTimeService } from 'shared/services/date-time-service'
 import { EphimeridesService } from 'shared/services/ephimeride-service'
@@ -18,17 +19,18 @@ export class App {
   public actualEphimeride: Ephimeride
 
   public chart: Highcharts.Chart
-  private chartCategories: string[]
 
   @observable()
   public date: Date = new Date()
 
   public hideOuterRange: boolean
   public diffDelta: number = 2
+  private chartCategories: string[]
 
   constructor(
     private ephimeridesService: EphimeridesService,
-    private dateTimeService: DateTimeService
+    private dateTimeService: DateTimeService,
+    private time: TimeValueConverter
   ) {
   }
 
@@ -92,7 +94,13 @@ export class App {
       const sonnenuntergang = e.sonnenuntergang
       sonnenaufgang.setFullYear(2000, 1, 1)
       sonnenuntergang.setFullYear(2000, 1, 1)
-      return [i, sonnenaufgang.getTime(), sonnenuntergang.getTime()]
+      // return [i, sonnenaufgang.getTime(), sonnenuntergang.getTime()]
+      return {
+        x: i,
+        low: sonnenaufgang.getTime(),
+        high: sonnenuntergang.getTime(),
+        dayLength: this.time.toView(e.tageslaenge)
+      }
     })
 
     this.chartCategories = this.ephimerides.map(e => e.tag.toLocaleDateString())
@@ -134,7 +142,7 @@ export class App {
               const upperDate = new Date(this.high)
               const lower = lowerDate.getHours() + ':' + String(lowerDate.getMinutes()).padStart(2, '0')
               const upper = upperDate.getHours() + ':' + String(upperDate.getMinutes()).padStart(2, '0')
-              return `Sonnenaufgang: ${lower} Uhr<br/>Sonnenuntergang: ${upper} Uhr`
+              return `Sonnenaufgang: ${lower} Uhr<br/>Sonnenuntergang: ${upper} Uhr<br/>Tageslänge: ${this['dayLength']}`
             }
           }
         }

@@ -19,7 +19,7 @@ export class Ephimeride {
   public sonnenaufgangDiff: number = 0
   public sonnenuntergangDiff: number = 0
   public isHighlighted: boolean
-  
+
   constructor(
     public stadt: string = '',
     public tag: Date = null,
@@ -37,7 +37,11 @@ export class Ephimeride {
   }
 
   get minDiff() {
-    return Math.min(Math.abs(this.tagDiff), Math.abs(this.tageslaengeDiff), Math.abs(this.sonnenaufgangDiff), Math.abs(this.sonnenuntergangDiff))
+    return Math.min(
+      Math.abs(this.tagDiff),
+      Math.abs(this.tageslaengeDiff),
+      Math.abs(this.sonnenaufgangDiff),
+      Math.abs(this.sonnenuntergangDiff))
   }
 }
 

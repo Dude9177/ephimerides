@@ -116,6 +116,9 @@ export class App {
         plotBackgroundColor: '#00003f',
         animation: false
       },
+      time: {
+        useUTC: false
+      },
       title: {
         text: 'Tagesverlauf'
       },
@@ -128,7 +131,8 @@ export class App {
         max: new Date(2000, 1, 1, 23, 59, 59).getTime(),
         title: { text: 'Stunden' },
         startOnTick: false,
-        endOnTick: false
+        endOnTick: false,
+        tickInterval: 6
       },
       series: [
         {

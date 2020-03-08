@@ -107,6 +107,10 @@ export class App {
 
     const dateIndex = this.chartCategories.indexOf(this.date.toLocaleDateString())
 
+    const wakeup = this.getTime(5, 15)
+    const schoolway = this.getTime(7, 30)
+    const schoolOut = this.getTime(15, 40)
+
     HighchartsMore(Highcharts)
 
     this.chart = Highcharts.chart('chartDiv', {
@@ -127,12 +131,30 @@ export class App {
       },
       yAxis: {
         type: 'datetime',
-        min: new Date(2000, 1, 1, 1, 1, 0).getTime(),
-        max: new Date(2000, 1, 1, 23, 59, 59).getTime(),
+        min: this.getTime(0, 0, 1),
+        max: this.getTime(23, 59, 59),
         title: { text: 'Stunden' },
         startOnTick: false,
         endOnTick: false,
-        tickInterval: 6
+        tickInterval: 6,
+        plotLines: [
+          {
+            color: 'blue',
+            value: wakeup,
+            width: 2,
+            zIndex: 4
+          }, {
+            color: 'magenta',
+            value: schoolway,
+            width: 2,
+            zIndex: 4
+          }, {
+            color: '#00ff00',
+            value: schoolOut,
+            width: 2,
+            zIndex: 4
+          }
+        ]
       },
       series: [
         {
@@ -155,4 +177,9 @@ export class App {
 
     this.setPlotband()
   }
+
+  getTime(hours: number, minutes: number, seconds: number = 0) {
+    return new Date(2000, 1, 1, hours, minutes, seconds).getTime()
+  }
+
 }

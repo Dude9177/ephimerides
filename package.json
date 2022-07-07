@@ -16,7 +16,7 @@
     "highcharts": "^8.0.0",
     "highcharts-more": "^0.1.7",
     "jscharting": "^2.9.0-7",
-    "moment": "^2.24.0"
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "aurelia-cli": "^1.2.3",
